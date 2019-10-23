@@ -7,6 +7,8 @@ services:
     volumes:
       - ./app_list_server:/app
     command: node_modules/nodemon/bin/nodemon.js -w /app /app/src/index.js
+    ports:
+      - 3000:3000
 
   app_list_server_lint:
     build:
@@ -14,3 +16,10 @@ services:
     volumes:
       - ./app_list_server:/app
     command: ./node_modules/.bin/eslint .
+
+  app_list_server_tests:
+    build:
+      context: ./app_list_server
+    volumes:
+      - ./app_list_server:/app
+    command: ./node_modules/.bin/ava

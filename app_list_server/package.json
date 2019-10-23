@@ -8,13 +8,27 @@
   },
   "main": "index.js",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint ."
+    "lint": "./node_modules/.bin/eslint .",
+    "test": "./node_modules/.bin/ava"
+  },
+  "dependencies": {
+    "koa": "2.10.0",
+    "koa-router": "7.4.0"
   },
   "devDependencies": {
+    "ava": "2.4.0",
     "eslint": "6.5.1",
     "eslint-plugin-import": "2.18.2",
     "eslint-config-pagarme-base": "3.0.0",
     "nodemon": "1.19.4"
+  },
+  "ava": {
+    "files": [
+      "tests/**/*"
+    ],
+    "helpers": [
+      "tests/helpers/**/*"
+    ]
   },
   "author": "macabeus",
   "license": "MIT"

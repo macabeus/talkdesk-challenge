@@ -1,3 +1,6 @@
 {
-  "extends": "pagarme-base"
+  "extends": "pagarme-base",
+  "rules": {
+    "no-param-reassign": "off"
+  }
 }
