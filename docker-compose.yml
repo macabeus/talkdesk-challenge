@@ -32,3 +32,10 @@ services:
     command: ./node_modules/.bin/webpack-dev-server --mode development --open --config config/webpack.config.js --host 0.0.0.0 --watch-aggregate-timeout 500 --watch-poll 1000
     ports:
       - 8080:8080
+
+  app_list_front_lint:
+    build:
+      context: ./app_list_front
+    volumes:
+      - ./app_list_front:/app
+    command: ./node_modules/.bin/eslint .

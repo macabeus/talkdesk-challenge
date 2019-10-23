@@ -28,7 +28,7 @@ Or
 
 > docker-compose run --rm app_list_server_tests
 
-To run the lint:
+To run the lint on the server:
 
 > cd app_list_server
 > npm run lint
@@ -36,3 +36,12 @@ To run the lint:
 Or
 
 > docker-compose run --rm app_list_server_lint
+
+To run the lint on the front:
+
+> cd app_list_front
+> npm run lint
+
+Or
+
+> docker-compose run --rm app_list_front_lint
