@@ -1,0 +1,15 @@
+{
+  "name": "app_list_server",
+  "version": "0.0.1",
+  "description": "App list server for the Talkdesk challenge application",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:macabeus/talkdesk-challenge.git"
+  },
+  "main": "index.js",
+  "devDependencies": {
+    "nodemon": "1.19.4"
+  },
+  "author": "macabeus",
+  "license": "MIT"
+}
