@@ -1,4 +1,5 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
+const formerKitRules = require('./formerKit/webpack.config')
 
 const htmlPlugin = new HtmlWebPackPlugin({
   filename: './index.html',
@@ -6,6 +7,7 @@ const htmlPlugin = new HtmlWebPackPlugin({
 })
 
 const rules = [
+  { test: /dump\/.*\.bin/, use: 'buffer-loader' },
   {
     exclude: /node_modules/,
     test: /\.js$/,
@@ -13,7 +15,9 @@ const rules = [
       loader: 'babel-loader',
     },
   },
-]
+].concat(formerKitRules)
+
+rules.concat()
 
 module.exports = {
   module: {
