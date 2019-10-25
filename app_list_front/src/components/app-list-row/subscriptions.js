@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Flexbox } from 'former-kit'
+import Price from '../price'
 import style from './style.css'
 
 const Subscriptions = ({ subscriptions }) => {
   const drawSubscriptions = subscriptions.map(({ name, price }) => (
     <div className={style.subscription} key={name}>
       <p className={style.name}>{name}</p>
-      <p>{price}</p>
+      <Price cents={price} />
     </div>
   ))
 
