@@ -12,6 +12,7 @@
     "test": "./node_modules/.bin/ava"
   },
   "dependencies": {
+    "@koa/cors": "3.0.0",
     "koa": "2.10.0",
     "koa-router": "7.4.0"
   },
