@@ -1,0 +1,26 @@
+@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+
+.appName {
+  color: var(--color-light-greenish-150);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.subscription {
+  display: flex;
+
+  & .name {
+    color: var(--color-light-coal-100);
+    font-weight: bold;
+    padding-right: var(--spacing-tiny);
+  }
+
+  & + .subscription {
+    padding-left: var(--spacing-small);
+  }
+}
+
+.category + .category {
+  padding-left: var(--spacing-tiny);
+}

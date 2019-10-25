@@ -1,11 +1,13 @@
 import React, { useContext } from 'react'
 import ApiContext from '../../contexts/api-context'
+import LoadedApps from './loaded-apps'
+import './style.css'
 
 const Main = () => {
   const { appsListState } = useContext(ApiContext)
 
   const status = {
-    loaded: () => <h6>Apps lodaded!</h6>,
+    loaded: () => <LoadedApps />,
     starting: () => <h6>Loading apps...</h6>,
   }
 
