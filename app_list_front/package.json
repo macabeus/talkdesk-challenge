@@ -7,7 +7,8 @@
     "url": "git@github.com:macabeus/talkdesk-challenge.git"
   },
   "scripts": {
-    "lint": "./node_modules/.bin/eslint . ; exit 0"
+    "lint": "./node_modules/.bin/eslint . ; exit 0",
+    "test": "./node_modules/.bin/ava"
   },
   "dependencies": {
     "@babel/polyfill": "7.6.0",
@@ -21,11 +22,17 @@
   },
   "devDependencies": {
     "@babel/core": "7.6.4",
+    "@babel/register": "7.6.2",
     "@babel/preset-env": "7.6.3",
     "@babel/preset-react": "7.6.3",
     "@svgr/webpack": "4.3.3",
+    "@testing-library/react": "9.3.0",
+    "ava": "2.4.0",
     "babel-loader": "8.0.6",
+    "browser-env": "3.2.6",
+    "canvas": "2.6.0",
     "css-loader": "2.1.0",
+    "ems": "1.5.5",
     "eslint": "6.5.1",
     "eslint-config-pagarme-react": "3.0.0",
     "file-loader": "4.2.0",
@@ -37,6 +44,7 @@
     "postcss-sass-each": "0.1.0",
     "postcss-url": "8.0.0",
     "react-dev-utils": "9.1.0",
+    "require-hacker": "3.0.1",
     "style-loader": "1.0.0",
     "stylelint-config-pagarme-react": "2.0.0",
     "stylelint-webpack-plugin": "1.0.1",
@@ -45,6 +53,28 @@
     "webpack": "4.41.2",
     "webpack-cli": "3.3.9",
     "webpack-dev-server": "3.9.0"
+  },
+  "ava": {
+    "require": [
+      "esm",
+      "./tests/_init.js"
+    ],
+    "babel": {
+      "testOptions": {
+        "plugins": [
+          [
+            "@babel/transform-runtime"
+          ]
+        ],
+        "presets": [
+          "@babel/preset-env",
+          "@babel/react"
+        ]
+      }
+    },
+    "files": [
+      "tests/**/*"
+    ]
   },
   "author": "macabeus",
   "license": "MIT"
