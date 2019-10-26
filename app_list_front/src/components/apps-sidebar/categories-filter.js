@@ -8,7 +8,18 @@ import ChevronUp from 'emblematic-icons/svg/ChevronUp24.svg'
 import ApiContext from '../../contexts/api-context'
 
 const CategoriesFilter = () => {
-  const { categoriesState } = useContext(ApiContext)
+  const {
+    categoriesState,
+    clearFilterByCategory,
+    filterByCategory,
+    setFilterByCategory,
+  } = useContext(ApiContext)
+
+  const createOnClickHandle = name => (
+    name === filterByCategory
+      ? clearFilterByCategory
+      : () => setFilterByCategory(name)
+  )
 
   return (
     <SidebarLinks>
@@ -23,8 +34,10 @@ const CategoriesFilter = () => {
         {
           categoriesState.data.map(name => (
             <SidebarLink
+              active={name === filterByCategory}
               key={name}
               title={name}
+              onClick={createOnClickHandle(name)}
             />
           ))
         }
