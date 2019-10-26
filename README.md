@@ -9,6 +9,14 @@ Start the server:
 
 Then, the API will be running at `http://localhost:3000`. You can check if everything is fine using the API `GET http://localhost:3000/status`; if you see `{ "status": "ok" }`, then the server is running.
 
+Now, to run the front-end start the following service:
+
+> cd app_list_front
+> npm i
+> docker-compose up app_list_front
+
+Finally, just head to `http://localhost:8080` to see the application running!
+
 ### Tests & Lint
 
 To run the tests:
@@ -20,7 +28,7 @@ Or
 
 > docker-compose run --rm app_list_server_tests
 
-To run the lint:
+To run the lint on the server:
 
 > cd app_list_server
 > npm run lint
@@ -28,3 +36,12 @@ To run the lint:
 Or
 
 > docker-compose run --rm app_list_server_lint
+
+To run the lint on the front:
+
+> cd app_list_front
+> npm run lint
+
+Or
+
+> docker-compose run --rm app_list_front_lint
