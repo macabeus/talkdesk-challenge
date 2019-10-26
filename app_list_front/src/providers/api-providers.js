@@ -27,13 +27,41 @@ const useAppsList = () => {
   return appsListState
 }
 
+const useCategories = () => {
+  const categoriesStates = {
+    loaded: data => ({ data, status: 'loaded' }),
+    starting: { data: [], status: 'starting' },
+  }
+
+  const [categoriesState, setCategoriesState] = useState(
+    categoriesStates.starting
+  )
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await fetch(`${serverBaseUrl}/categories`)
+      const responseJson = await response.json()
+
+      setCategoriesState(
+        categoriesStates.loaded(responseJson)
+      )
+    }
+
+    fetchCategories()
+  }, []) /* it should run only once */ // eslint-disable-line react-hooks/exhaustive-deps
+
+  return categoriesState
+}
+
 const ApiProvider = ({ children }) => {
   const appsListState = useAppsList()
+  const categoriesState = useCategories()
 
   return (
     <ApiContext.Provider
       value={{
         appsListState,
+        categoriesState,
       }}
     >
       {children}
