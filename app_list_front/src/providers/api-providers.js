@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import ApiContext from '../contexts/api-context'
+import { getApps } from '../network/apps'
 import { serverBaseUrl } from '../constants.json'
 
-const useAppsList = () => {
+const useAppsList = (filterByCategory) => {
   const appsListStates = {
     loaded: apps => ({ apps, status: 'loaded' }),
     starting: { apps: null, status: 'starting' },
@@ -13,27 +14,60 @@ const useAppsList = () => {
 
   useEffect(() => {
     const fetchApps = async () => {
-      const response = await fetch(`${serverBaseUrl}/apps`)
-      const responseJson = await response.json()
+      const apps = await getApps(filterByCategory)
 
       setAppsListState(
-        appsListStates.loaded(responseJson)
+        appsListStates.loaded(apps)
       )
     }
 
     fetchApps()
-  }, []) /* it should run only once */ // eslint-disable-line react-hooks/exhaustive-deps
+  }, [filterByCategory]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return appsListState
 }
 
+const useCategories = () => {
+  const categoriesStates = {
+    loaded: data => ({ data, status: 'loaded' }),
+    starting: { data: [], status: 'starting' },
+  }
+
+  const [categoriesState, setCategoriesState] = useState(
+    categoriesStates.starting
+  )
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await fetch(`${serverBaseUrl}/categories`)
+      const responseJson = await response.json()
+
+      setCategoriesState(
+        categoriesStates.loaded(responseJson)
+      )
+    }
+
+    fetchCategories()
+  }, []) /* it should run only once */ // eslint-disable-line react-hooks/exhaustive-deps
+
+  return categoriesState
+}
+
 const ApiProvider = ({ children }) => {
-  const appsListState = useAppsList()
+  const [filterByCategory, setFilterByCategory] = useState(null)
+  const appsListState = useAppsList(filterByCategory)
+  const categoriesState = useCategories()
+
+  const clearFilterByCategory = () => setFilterByCategory(null)
 
   return (
     <ApiContext.Provider
       value={{
         appsListState,
+        categoriesState,
+        clearFilterByCategory,
+        filterByCategory,
+        setFilterByCategory,
       }}
     >
       {children}

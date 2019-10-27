@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
-import { Card, CardContent } from 'former-kit'
+import { Card, CardContent, Layout } from 'former-kit'
 import ApiContext from '../../contexts/api-context'
 import AppListRow from '../../components/app-list-row'
+import AppsSidebar from '../../components/apps-sidebar'
 import style from './style.css'
 
 const LoadedApps = () => {
@@ -20,7 +21,11 @@ const LoadedApps = () => {
     </Card>
   ))
 
-  return apps
+  return (
+    <Layout sidebar={<AppsSidebar />}>
+      {apps}
+    </Layout>
+  )
 }
 
 export default LoadedApps
