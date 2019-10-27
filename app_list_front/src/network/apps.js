@@ -1,9 +1,9 @@
 import { serverBaseUrl } from '../constants.json'
 
-const getApps = async (filterByCategory) => {
+const getApps = async (filterByCategory, page) => {
   const response = filterByCategory
-    ? await fetch(`${serverBaseUrl}/apps?filterByCategory=${filterByCategory}`)
-    : await fetch(`${serverBaseUrl}/apps`)
+    ? await fetch(`${serverBaseUrl}/apps?page=${page}&filterByCategory=${filterByCategory}`)
+    : await fetch(`${serverBaseUrl}/apps?page=${page}`)
 
   const responseJson = await response.json()
 
