@@ -18,8 +18,8 @@
     "former-kit-skin-pagarme": "1.5.2",
     "former-kit": "1.7.1",
     "prop-types": "15.7.2",
-    "react": "16.11.0",
-    "react-dom": "16.11.0"
+    "react": "16.8.6",
+    "react-dom": "16.8.6"
   },
   "devDependencies": {
     "@babel/core": "7.6.4",
