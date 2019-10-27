@@ -14,6 +14,7 @@
     "@babel/polyfill": "7.6.0",
     "@babel/runtime": "7.6.3",
     "@babel/plugin-transform-runtime": "7.6.2",
+    "classnames": "2.2.6",
     "emblematic-icons": "0.7.1",
     "former-kit-skin-pagarme": "1.5.2",
     "former-kit": "1.7.1",

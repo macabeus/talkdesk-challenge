@@ -21,6 +21,21 @@
   }
 }
 
-.category + .category {
-  padding-left: var(--spacing-tiny);
+.category {
+
+  & > div {
+    cursor: pointer;
+  }
+
+  & + .category {
+    padding-left: var(--spacing-tiny);
+  }
+}
+
+.active {
+
+  & > div {
+    border-color: var(--color-light-green-50);
+    color: var(--color-light-greenish-150);
+  }
 }
