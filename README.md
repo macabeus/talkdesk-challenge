@@ -5,8 +5,6 @@
 
 Start the server:
 
-> cd app_list_front
-> npm i
 > docker-compose up app_list_server
 
 Then, the API will be running at `http://localhost:3000`. You can check if everything is fine using the API `GET http://localhost:3000/status`; if you see `{ "status": "ok" }`, then the server is running.
