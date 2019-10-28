@@ -7,6 +7,7 @@
     "url": "git@github.com:macabeus/talkdesk-challenge.git"
   },
   "scripts": {
+    "start": "./node_modules/.bin/webpack-dev-server --mode development --open --config config/webpack.config.js",
     "lint": "./node_modules/.bin/eslint . ; exit 0",
     "test": "./node_modules/.bin/ava"
   },

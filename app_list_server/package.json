@@ -8,6 +8,7 @@
   },
   "main": "index.js",
   "scripts": {
+    "start": "./node_modules/nodemon/bin/nodemon.js -w ./ ./src/index.js",
     "lint": "./node_modules/.bin/eslint .",
     "test": "./node_modules/.bin/ava"
   },
