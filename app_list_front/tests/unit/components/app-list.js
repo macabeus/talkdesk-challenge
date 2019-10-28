@@ -2,16 +2,16 @@ import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 import test from 'ava'
 import ApiProviderMock from '../../helpers/api-provider-mock'
-import AppListRow from '../../../src/components/app-list-row'
-import Categories from '../../../src/components/app-list-row/categories'
+import AppRow from '../../../src/components/app-list/app-row'
+import Categories from '../../../src/components/app-list/categories'
 
-test('Component AppListRow', (t) => {
+test('Component AppRow', (t) => {
   const appName = 'app name'
   const description = 'nice description'
 
   const { container } = render(
     <ApiProviderMock>
-      <AppListRow
+      <AppRow
         name={appName}
         description={description}
         categories={['foo', 'bar']}

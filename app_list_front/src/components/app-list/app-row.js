@@ -5,7 +5,7 @@ import Categories from './categories'
 import Subscriptions from './subscriptions'
 import style from './style.css'
 
-const AppListRow = ({
+const AppRow = ({
   categories,
   description,
   name,
@@ -24,7 +24,7 @@ const AppListRow = ({
   </Flexbox>
 )
 
-AppListRow.propTypes = {
+AppRow.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.string).isRequired,
   description: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -34,4 +34,4 @@ AppListRow.propTypes = {
   })).isRequired,
 }
 
-export default AppListRow
+export default AppRow
