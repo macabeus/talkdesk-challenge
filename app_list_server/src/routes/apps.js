@@ -1,5 +1,6 @@
 const apps = require('../../assets/apps.json')
 const { pageSize } = require('../constants.json')
+const sum = require('../utils/sum')
 
 const appsRoute = router => router.get('/apps', (ctx) => {
   const { page, filterByCategory } = ctx.request.query
@@ -10,10 +11,15 @@ const appsRoute = router => router.get('/apps', (ctx) => {
       : apps
   )
 
-  const offset = pageSize * page
-  const appsResult = appsFiltered.slice(offset, offset + pageSize)
+  const sumSubscriptionsPrice = app => sum(app.subscriptions.map(i => i.price))
+  const appsSorted = [
+    ...appsFiltered,
+  ].sort((a, b) => sumSubscriptionsPrice(a) - sumSubscriptionsPrice(b))
 
-  const pagesCount = Math.ceil(appsFiltered.length / pageSize)
+  const offset = pageSize * page
+  const appsResult = appsSorted.slice(offset, offset + pageSize)
+
+  const pagesCount = Math.ceil(appsSorted.length / pageSize)
 
   const result = {
     metadata: {

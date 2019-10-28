@@ -2,7 +2,7 @@ const apps = require('../../assets/apps.json')
 
 const appsRoute = router => router.get('/categories', (ctx) => {
   const categoriesSet = new Set(apps.map(app => app.categories).flat())
-  const categoriesArray = Array.from(categoriesSet)
+  const categoriesArray = Array.from(categoriesSet).sort()
 
   ctx.body = categoriesArray
 })

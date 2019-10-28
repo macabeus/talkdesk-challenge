@@ -61,6 +61,10 @@ const ApiProvider = ({ children }) => {
 
   const clearFilterByCategory = () => setFilterByCategory(null)
 
+  useEffect(() => {
+    setPage(0)
+  }, [filterByCategory])
+
   return (
     <ApiContext.Provider
       value={{
