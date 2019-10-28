@@ -3,12 +3,13 @@ import { Card, CardContent, Layout } from 'former-kit'
 import ApiContext from '../../contexts/api-context'
 import AppListRow from '../../components/app-list-row'
 import AppsSidebar from '../../components/apps-sidebar'
+import AppsPagination from '../../components/apps-pagination'
 import style from './style.css'
 
 const LoadedApps = () => {
   const { appsListState } = useContext(ApiContext)
 
-  const apps = appsListState.apps.map(i => (
+  const apps = appsListState.data.apps.map(i => (
     <Card key={i.id} className={style.cardApp}>
       <CardContent>
         <AppListRow
@@ -24,6 +25,8 @@ const LoadedApps = () => {
   return (
     <Layout sidebar={<AppsSidebar />}>
       {apps}
+
+      <AppsPagination />
     </Layout>
   )
 }

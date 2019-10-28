@@ -6,6 +6,6 @@ body { /* stylelint-disable-line selector-max-type */
   margin: 0;
 }
 
-.cardApp + .cardApp {
-  margin-top: var(--spacing-small);
+.cardApp {
+  margin-bottom: var(--spacing-small);
 }
