@@ -1,12 +1,16 @@
 version: '3.7'
 
+volumes:
+  node_modules_server:
+  node_modules_front:
+
 services:
   app_list_server:
     build:
       context: ./app_list_server
     volumes:
+      - node_modules_server:/app/node_modules
       - ./app_list_server:/app
-      - /app/node_modules
     command: node_modules/nodemon/bin/nodemon.js -w /app /app/src/index.js
     ports:
       - 3000:3000
@@ -15,24 +19,24 @@ services:
     build:
       context: ./app_list_server
     volumes:
+      - node_modules_server:/app/node_modules
       - ./app_list_server:/app
-      - /app/node_modules
     command: ./node_modules/.bin/eslint .
 
   app_list_server_tests:
     build:
       context: ./app_list_server
     volumes:
+      - node_modules_server:/app/node_modules
       - ./app_list_server:/app
-      - /app/node_modules
     command: ./node_modules/.bin/ava
 
   app_list_front:
     build:
       context: ./app_list_front
     volumes:
+      - node_modules_front:/app/node_modules
       - ./app_list_front:/app
-      - /app/node_modules
     command: ./node_modules/.bin/webpack-dev-server --mode development --open --config config/webpack.config.js --host 0.0.0.0 --watch-aggregate-timeout 500 --watch-poll 1000
     ports:
       - 8080:8080
@@ -41,14 +45,14 @@ services:
     build:
       context: ./app_list_front
     volumes:
+      - node_modules_front:/app/node_modules
       - ./app_list_front:/app
-      - /app/node_modules
     command: ./node_modules/.bin/eslint .
 
   app_list_front_tests:
     build:
       context: ./app_list_front
     volumes:
+      - node_modules_front:/app/node_modules
       - ./app_list_front:/app
-      - /app/node_modules
     command: ./node_modules/.bin/ava
