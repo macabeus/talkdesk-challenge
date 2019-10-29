@@ -1,25 +1,17 @@
-const apps = require('../../assets/apps.json')
+const assetApps = require('../../assets/apps.json')
+const { filterApps } = require('../models/apps')
 const { pageSize } = require('../constants.json')
 const sum = require('../utils/sum')
 
 const appsRoute = router => router.get('/apps', (ctx) => {
   const { page, filterByCategory, filterByName } = ctx.request.query
 
-  const filterByCategoryPredicate = (
-    filterByCategory
-      ? app => app.categories.includes(filterByCategory)
-      : () => true
+  const appsFiltered = filterApps(
+    assetApps, {
+      category: filterByCategory,
+      name: filterByName,
+    }
   )
-
-  const filterByNamePredicate = (
-    filterByName
-      ? app => app.name.includes(filterByName)
-      : () => true
-  )
-
-  const appsFiltered = apps
-    .filter(filterByCategoryPredicate)
-    .filter(filterByNamePredicate)
 
   const sumSubscriptionsPrice = app => sum(app.subscriptions.map(i => i.price))
   const appsSorted = [

@@ -18,4 +18,11 @@ const getApps = async (filterByCategory, filterByName, page) => {
   return responseJson
 }
 
-export { getApps } // eslint-disable-line import/prefer-default-export
+const getCategories = async () => {
+  const response = await fetch(`${serverBaseUrl}/categories`)
+  const responseJson = await response.json()
+
+  return responseJson
+}
+
+export { getApps, getCategories }

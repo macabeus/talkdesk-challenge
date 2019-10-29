@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import ApiContext from '../contexts/api-context'
-import { getApps } from '../network/apps'
-import { serverBaseUrl } from '../constants.json'
+import { getApps, getCategories } from '../network/apps'
 
 const useAppsList = (filterByCategory, filterByName, page) => {
   const appsListStates = {
@@ -39,11 +38,10 @@ const useCategories = () => {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch(`${serverBaseUrl}/categories`)
-      const responseJson = await response.json()
+      const data = await getCategories()
 
       setCategoriesState(
-        categoriesStates.loaded(responseJson)
+        categoriesStates.loaded(data)
       )
     }
 
