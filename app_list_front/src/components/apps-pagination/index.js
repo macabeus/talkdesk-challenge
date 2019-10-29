@@ -7,6 +7,10 @@ import ApiContext from '../../contexts/api-context'
 const AppsPagination = () => {
   const { appsListState, page, setPage } = useContext(ApiContext)
 
+  if (appsListState.data.metadata.pagesCount <= 1) {
+    return null
+  }
+
   return (
     <Pagination
       currentPage={page + 1}

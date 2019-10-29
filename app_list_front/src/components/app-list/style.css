@@ -7,6 +7,10 @@
   margin-bottom: 0;
 }
 
+.cardApp {
+  margin-bottom: var(--spacing-small);
+}
+
 .subscription {
   display: flex;
 

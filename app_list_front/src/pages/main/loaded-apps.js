@@ -1,34 +1,19 @@
-import React, { useContext } from 'react'
-import { Card, CardContent, Layout } from 'former-kit'
-import ApiContext from '../../contexts/api-context'
-import AppListRow from '../../components/app-list-row'
+import React from 'react'
+import { Layout } from 'former-kit'
+import AppList from '../../components/app-list'
+import AppSearch from '../../components/app-search'
 import AppsSidebar from '../../components/apps-sidebar'
 import AppsPagination from '../../components/apps-pagination'
-import style from './style.css'
+import './style.css'
 
-const LoadedApps = () => {
-  const { appsListState } = useContext(ApiContext)
+const LoadedApps = () => (
+  <Layout sidebar={<AppsSidebar />}>
+    <AppSearch />
 
-  const apps = appsListState.data.apps.map(i => (
-    <Card key={i.id} className={style.cardApp}>
-      <CardContent>
-        <AppListRow
-          name={i.name}
-          description={i.description}
-          categories={i.categories}
-          subscriptions={i.subscriptions}
-        />
-      </CardContent>
-    </Card>
-  ))
+    <AppList />
 
-  return (
-    <Layout sidebar={<AppsSidebar />}>
-      {apps}
-
-      <AppsPagination />
-    </Layout>
-  )
-}
+    <AppsPagination />
+  </Layout>
+)
 
 export default LoadedApps

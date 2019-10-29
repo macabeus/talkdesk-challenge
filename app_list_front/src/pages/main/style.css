@@ -5,7 +5,3 @@ body { /* stylelint-disable-line selector-max-type */
   background-color: var(--color-light-platinum-100);
   margin: 0;
 }
-
-.cardApp {
-  margin-bottom: var(--spacing-small);
-}

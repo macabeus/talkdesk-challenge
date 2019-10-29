@@ -4,7 +4,7 @@ import ApiContext from '../contexts/api-context'
 import { getApps } from '../network/apps'
 import { serverBaseUrl } from '../constants.json'
 
-const useAppsList = (filterByCategory, page) => {
+const useAppsList = (filterByCategory, filterByName, page) => {
   const appsListStates = {
     loaded: data => ({ data, status: 'loaded' }),
     starting: { data: null, status: 'starting' },
@@ -14,7 +14,7 @@ const useAppsList = (filterByCategory, page) => {
 
   useEffect(() => {
     const fetchApps = async () => {
-      const data = await getApps(filterByCategory, page)
+      const data = await getApps(filterByCategory, filterByName, page)
 
       setAppsListState(
         appsListStates.loaded(data)
@@ -22,7 +22,7 @@ const useAppsList = (filterByCategory, page) => {
     }
 
     fetchApps()
-  }, [filterByCategory, page]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [filterByCategory, filterByName, page]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return appsListState
 }
@@ -55,8 +55,9 @@ const useCategories = () => {
 
 const ApiProvider = ({ children }) => {
   const [filterByCategory, setFilterByCategory] = useState(null)
+  const [filterByName, setFilterByName] = useState('')
   const [page, setPage] = useState(0)
-  const appsListState = useAppsList(filterByCategory, page)
+  const appsListState = useAppsList(filterByCategory, filterByName, page)
   const categoriesState = useCategories()
 
   const clearFilterByCategory = () => setFilterByCategory(null)
@@ -72,8 +73,10 @@ const ApiProvider = ({ children }) => {
         categoriesState,
         clearFilterByCategory,
         filterByCategory,
+        filterByName,
         page,
         setFilterByCategory,
+        setFilterByName,
         setPage,
       }}
     >
