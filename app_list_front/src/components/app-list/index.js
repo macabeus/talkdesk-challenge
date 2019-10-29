@@ -7,6 +7,10 @@ import style from './style.css'
 const AppList = () => {
   const { appsListState } = useContext(ApiContext)
 
+  if (appsListState.data.apps.length === 0) {
+    return <>No result</>
+  }
+
   const apps = appsListState.data.apps.map(i => (
     <Card key={i.id} className={style.cardApp}>
       <CardContent>

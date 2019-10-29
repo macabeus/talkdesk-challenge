@@ -5,8 +5,10 @@ import ApiContext from '../../src/contexts/api-context'
 const ApiProviderMock = ({
   appsListState,
   children,
+  filterByName,
   page,
   setFilterByCategory,
+  setFilterByName,
   setPage,
 }) => {
   const categoriesState = {
@@ -19,8 +21,10 @@ const ApiProviderMock = ({
       value={{
         appsListState,
         categoriesState,
+        filterByName,
         page,
         setFilterByCategory,
+        setFilterByName,
         setPage,
       }}
     >
@@ -30,23 +34,28 @@ const ApiProviderMock = ({
 }
 
 ApiProviderMock.propTypes = {
-  appsListState: PropTypes.objectOf({
-    data: PropTypes.objectOf({
-      metadata: PropTypes.objectOf({
+  appsListState: PropTypes.shape({
+    data: PropTypes.shape({
+      apps: PropTypes.array,
+      metadata: PropTypes.shape({
         pagesCount: PropTypes.number,
       }),
     }),
   }),
   children: PropTypes.node.isRequired,
+  filterByName: PropTypes.string,
   page: PropTypes.number,
   setFilterByCategory: PropTypes.func,
+  setFilterByName: PropTypes.func,
   setPage: PropTypes.func,
 }
 
 ApiProviderMock.defaultProps = {
   appsListState: {},
+  filterByName: '',
   page: 0,
   setFilterByCategory: () => {},
+  setFilterByName: () => {},
   setPage: () => {},
 }
 

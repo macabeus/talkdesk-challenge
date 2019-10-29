@@ -3,13 +3,23 @@ const { pageSize } = require('../constants.json')
 const sum = require('../utils/sum')
 
 const appsRoute = router => router.get('/apps', (ctx) => {
-  const { page, filterByCategory } = ctx.request.query
+  const { page, filterByCategory, filterByName } = ctx.request.query
 
-  const appsFiltered = (
+  const filterByCategoryPredicate = (
     filterByCategory
-      ? apps.filter(app => app.categories.includes(filterByCategory))
-      : apps
+      ? app => app.categories.includes(filterByCategory)
+      : () => true
   )
+
+  const filterByNamePredicate = (
+    filterByName
+      ? app => app.name.includes(filterByName)
+      : () => true
+  )
+
+  const appsFiltered = apps
+    .filter(filterByCategoryPredicate)
+    .filter(filterByNamePredicate)
 
   const sumSubscriptionsPrice = app => sum(app.subscriptions.map(i => i.price))
   const appsSorted = [
