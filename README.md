@@ -25,8 +25,7 @@ Despite being a simple app, I made several core decisions:
 
 ### Dockerize the entire application
 
-The main reason why I'm using Docker is to have an easier setup. With that we can ensure that everyone is using the same Node version, and on a real project it's useful to a better maintain. Maybe we would like to add a database, so is easer to do it using Docker, instead of install the database on real machine.<br>
-In short words: that is a simpler setup on a new environment.
+The main reason why I'm using Docker is to have an easier setup. With that we can ensure that everyone is using the same Node version, and on a real project it's useful to a better maintain. For example, maybe we would like to add a database, so is easer to do it using Docker, instead of install the database on real machine.
 
 ### Use a single repo with two projects
 
@@ -38,9 +37,9 @@ Since this is a very simple monorepo, with only two projects, I decided to not u
 
 ### Provider Pattern
 
-This application is too simple. We have just one page and few elements with few states to manage, so we don't need to use redux. Please, use a simple approach to a simple problem. [You might not need Redux!](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367) And with React Hooks we have an amazing `useReducer` - that I used one time on this project.
+This application is too simple. We have just one page and few elements with few states to manage, so we don't need to use redux. Please, use a simple approach to a simple problem. [You might not need Redux!](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367)
 
-So I decided to use Provider Pattern, that is solution that fit better in this project. In this application, I'm using just one provider, `ApiProvider`, to handle the requests to the server. But on other bigger projects I created more providers, following the single responsibility principle and to avoid unnecessary re-renders.
+So I decided to use Provider Pattern, that is a solution that fits better in this project. In this application, I'm using just one provider, `ApiProvider`, to handle the requests to the server. But on others bigger projects I created more providers, following the single responsibility principle and to avoid unnecessary re-renders.
 
 ### Former-Kit
 
