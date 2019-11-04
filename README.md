@@ -42,7 +42,7 @@ This application is too simple. We have just one page and few elements with few 
 
 So I decided to use Provider Pattern, that is solution that fit better in this project. In this application, I'm using just one provider, `ApiProvider`, to handle the requests to the server. But on other bigger projects I created more providers, following the single responsibility principle and to avoid unnecessary re-renders.
 
-### UI/UX decisions
+### Former-Kit
 
 Despite you sent to me a file with the example of the application, I chose to write a complete new one.
 
