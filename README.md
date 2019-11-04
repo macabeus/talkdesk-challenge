@@ -2,7 +2,7 @@
 
 # talkdesk-challenge
 
-> Developer challenge solution<br>
+> **Developer challenge solution**<br>
 > A simple yet powerful app using Node.js + React Hooks + Provider Pattern + Former-Kit + Docker!
 
 <p align="center">
