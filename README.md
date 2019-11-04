@@ -1,10 +1,9 @@
 <img src="http://www.chasetek.com/wp-content/uploads/2019/05/talkdesk.png" width="200px" height="200px" align="left"/>
 
 # talkdesk-challenge
-🛃 Talkdesk challenge application
 
 > Developer challenge solution<br>
-> A simple yet powerful app using Node.js + React Hooks + Docker + Koa + Ava + React Testing Library!
+> A simple yet powerful app using Node.js + React Hooks + Provider Pattern + Former-Kit + Docker!
 
 <p align="center">
   <img src="https://i.imgur.com/LCti9OM.png" width=780>
@@ -14,33 +13,72 @@
 
 It is an aplication to list and search other apps, that the API provides.
 
-## How it works?
+## What does it do?
 
-Despite being a simple app, I opted for two core decisions:
+It is a just an app to list others apps, where you can filter and search using the browser – or just the API.
+
+> Tip: you could review my entire codebase looking for each commit and PR, so you'll understand better how the code grown.
+
+## Decisions
+
+Despite being a simple app, I made several core decisions:
 
 ### Dockerize the entire application
 
-The main reason why I'm using Docker is to have an easier setup. With that we can ensure that everyone is using the same Node version, and on a real project it is better to maintain. Maybe we would like to add a database, so is easer to do it using Docker, instead of install the database on real machine.<br>
-That is a simpler setup on a new environment.
+The main reason why I'm using Docker is to have an easier setup. With that we can ensure that everyone is using the same Node version, and on a real project it's useful to a better maintain. Maybe we would like to add a database, so is easer to do it using Docker, instead of install the database on real machine.<br>
+In short words: that is a simpler setup on a new environment.
 
-### Use a single repo
+### Use a single repo with two projects
 
-Yeah, we could build the entire application on a single project, but I chose to build two: `app_list_server` and `app_list_server`. The first application is responsible for providing an API that the second application uses to render a web app. We could have `app_list_server` using Koa to provide static content, but it would result in extra coupling between the front and the back-end - which can become something critical at scale.
+Yeah, we could build the entire application on a single big project, but I chose to build two: `app_list_server` and `app_list_front`. The first project is responsible for providing an API that the second project uses it to render the web app. We could have `app_list_server` using Koa to provide the static content, but it would result in extra coupling between the front and the back-end - which can become something critical at scale.
 
 These two decisions are also handy when deploying: we could write a `Dockerfile` focused to deploy the `app_list_server` project on something like AWS Fargate, and then deploy the `app_list_server` on a static content provider, such as AWS S3.
 
-### Other decisions
+Since this is a very simple monorepo, with only two projects, I decided to not use [Lerna](https://github.com/lerna/lerna), but on a big application, with more projects, Lerna could help a lot to manage the dependencies between the projects and inside of each project.
 
-- explicar a razão de porque não usei o exemplo (apesar dele demonstrar muito bem o que se desejava, sendo uma excelente ferramenta de comunicação, não era react-first)
-- falar porque usei o former-kit, e os prós e contras dele (contras: mexe no build do projeto [o que não é exxatamente ruim, pois eu já usaria um processo de build bem parecido], não da para importar apenas parte dos componentes)
-  - tem vários recursos de acessibilidade (você consegue acessar todos os recursos desse desafio só usando o teclado! experimente!)
-  - exemplificar que o beginExpanded foi algo qe eu implementei mesmo após ter saído da pagarme
-  - os estilos são facilmente customizáveis
-  - foi a primeira vez que fiz um projeto em que estava testando a UI com o former-kit, e vi que ele é bem dificil de se testar; isso é algo que precisa ser levado em conta se fosse usar me um projeto real
-- justificar o uso do koa (é bem simples e microframework, diferente de outras libs como o Hapi que prende no ecosistema dele; uma das desvantagens do koa é causar side-effect, o que pode ser confuso para quem nao esta acostumado)
-- justificar o porque de usar provider pattern (linkar a minha talk e a postagem no medium do cara)
-- justificar a mudança naquela parte do layout (ao invés dos foo/bar, usei o <Tag>, para não da ideia de diretório e um estar dentro do outro)
-- dizer que já havia usado ava para fazer uma api, e foi a primeira vez que fui usar no front, e achei okay, mas acabou complicado mais o processo de build, e isso é algo que teria que ser levado em consideraçao num outro projeto
+### Provider Pattern
+
+This application is too simple. We have just one page and few elements with few states to manage, so we don't need to use redux. Please, use a simple approach to a simple problem. [You might not need Redux!](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367) And with React Hooks we have an amazing `useReducer` - that I used one time on this project.
+
+So I decided to use Provider Pattern, that is solution that fit better in this project. In this application, I'm using just one provider, `ApiProvider`, to handle the requests to the server. But on other bigger projects I created more providers, following the single responsibility principle and to avoid unnecessary re-renders.
+
+### UI/UX decisions
+
+Despite you sent to me a file with the example of the application, I chose to write a complete new one.
+
+The example that you gave me is an excelent communication tool, but it wasn't good to create a new application, becacuse the code isn't extendable. For example, I'm using React (a good library to manage the UI state), and is good to write a project using React component instead of pure HTML code as like the example was written.
+
+And as UI library component, I picked the library [Former-Kit](https://github.com/pagarme/former-kit), because it is a good react-first component library. There are many components and the styles are very easy to customize. Another important feature is that this library has an accessibility - you could navigate on the entire application using just your keyboard! 
+
+One of the disadvantage of this library if the build process. Unfortunately you need to set some steps on yor Webpack to can use this library.
+
+### Tests
+
+I'm using Ava on both projects, because it can run asynchronously the tests ~(bye bye tests that demands state of the previous test!)~. I already used it on production and it fits very well - but it was my first time using it on the front-end side, and I didn't like to write the `app_list_front/tests/_init.js` file to work well on the front-end...
+
+On the front-end side, I picked React Testing Library, because it enfores good pratices when you are writing the tests. For example, you can't call the methods or look the internal state of you component. You only can see what the user too can see.
+
+## Routes
+
+There are three routes on the server application: `GET /status`, `GET /apps` and `GET /categories`. On the front-end side there is just the index route.
+
+### `GET /status`
+
+Just to check if the server is running. It doesn't have any parameter and it should returns this:
+
+```json
+{
+    "status": "ok"
+}
+```
+
+### `GET /apps`
+
+To get the list of apps. You could use the query string parameters `page`, `filterByCategory`, `filterByName`. For example, `/apps?page=1&filterByCategory=Reporting`. The result will be a part of the `app_list_server/assets/apps.json` file.
+
+### `GET /categories`
+
+To get the list of categories. It doesn't have any parameter and it'll return an array sorted alphabetically.
 
 ## How to run?
 
@@ -113,7 +151,7 @@ I'm using the test runner [AVA](https://github.com/avajs/ava).
 
 I'm following [Pagar.me JavaScript Style Guide](https://github.com/pagarme/javascript-style-guide) on `app_list_server` and [the respective lint rules for React application](https://github.com/pagarme/react-style-guide) on `app_list_front`.
 
-These lint rules are based on the loved Airbnb, but are more still more restrictive.
+These lint rules are based on the loved Airbnb, but are still more restrictive.
 
 1 - To run the lint on the server:
 
@@ -125,7 +163,7 @@ These lint rules are based on the loved Airbnb, but are more still more restrict
 📜 Without Docker
 ```
 > cd app_list_server
-> npm run test
+> npm run lint
 ```
 
 2 - To run the lint on the front:
@@ -139,5 +177,4 @@ These lint rules are based on the loved Airbnb, but are more still more restrict
 ```
 > cd app_list_front
 > npm run lint
-> cd app_list_server
 ```
