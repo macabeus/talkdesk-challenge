@@ -17,7 +17,7 @@ It is an aplication to list and search other apps, that the API provides.
 
 It is a just an app to list others apps, where you can filter and search using the browser – or just the API.
 
-> Tip: you could review my entire codebase looking for each commit and PR, so you'll understand better how the code grown.
+> Tip: you could review my entire codebase looking for each commit and PR, so you'll understand better how the code grew.
 
 ## Decisions
 
@@ -25,37 +25,37 @@ Despite being a simple app, I made several core decisions:
 
 ### Dockerize the entire application
 
-The main reason why I'm using Docker is to have an easier setup. With that we can ensure that everyone is using the same Node version, and on a real project it's useful to a better maintain. For example, maybe we would like to add a database, so is easer to do it using Docker, instead of install the database on real machine.
+The main reason I'm using Docker is to have an easier setup. With that we can ensure that everyone is using the same Node version, and on a real project it makes maintenance easier. For example, maybe we would like to add a database, so is easier to do it using Docker, instead of installing the database on a real machine.
 
 ### Use a single repo with two projects
 
-Yeah, we could build the entire application on a single big project, but I chose to build two: `app_list_server` and `app_list_front`. The first project is responsible for providing an API that the second project uses it to render the web app. We could have `app_list_server` using Koa to provide the static content, but it would result in extra coupling between the front and the back-end - which can become something critical at scale.
+Yeah, we could build the entire application on a single big project, but I chose to build two: `app_list_server` and `app_list_front`. The first project is responsible for providing an API that the second project uses to render the web app. We could have `app_list_server` using Koa to provide the static content, but it would result in extra coupling between the front and the backend - which can become critical at scale.
 
 These two decisions are also handy when deploying: we could write a `Dockerfile` focused to deploy the `app_list_server` project on something like AWS Fargate, and then deploy the `app_list_server` on a static content provider, such as AWS S3.
 
-Since this is a very simple monorepo, with only two projects, I decided to not use [Lerna](https://github.com/lerna/lerna), but on a big application, with more projects, Lerna could help a lot to manage the dependencies between the projects and inside of each project.
+Since this is a very simple monorepo, with only two projects, I decided to not use [Lerna](https://github.com/lerna/lerna), but on a big application, with more projects, Lerna could help a lot to manage the dependencies between the projects and within each project.
 
 ### Provider Pattern
 
-This application is too simple. We have just one page and few elements with few states to manage, so we don't need to use redux. Please, use a simple approach to a simple problem. [You might not need Redux!](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367)
+Redux is much more complicated than this application requires. We have just one page and few elements with few states to manage, so we don't need to use redux. I chose to use a simple approach to a simple problem. [You might not need Redux!](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367)
 
-So I decided to use Provider Pattern, that is a solution that fits better in this project. In this application, I'm using just one provider, `ApiProvider`, to handle the requests to the server. But on others bigger projects I created more providers, following the single responsibility principle and to avoid unnecessary re-renders.
+So I decided to use Provider Pattern, which is a solution that fits better in this project. In this application, I'm using just one provider, `ApiProvider`, to handle the requests to the server. But on others bigger projects I created more providers, following the single responsibility principle and to avoid unnecessary re-renders.
 
 ### Former-Kit
 
-Despite you sent to me a file with the example of the application, I chose to write a complete new one.
+Although you sent to me a file with the example of the application, I chose to write a completely new one.
 
-The example that you gave me is an excelent communication tool, but it wasn't good to create a new application, becacuse the code isn't extendable. For example, I'm using React (a good library to manage the UI state), and is good to write a project using React component instead of pure HTML code as like the example was written.
+The example that you gave me is an excellent communication tool, but we can create more extendable code using other technologies. For example, I'm using React (a good library to manage the UI state), and it is better to write a project using React component instead of pure HTML code like the example.
 
-And as UI library component, I picked the library [Former-Kit](https://github.com/pagarme/former-kit), because it is a good react-first component library. There are many components and the styles are very easy to customize. Another important feature is that this library has an accessibility - you could navigate on the entire application using just your keyboard! 
+For the UI library component, I picked the library [Former-Kit](https://github.com/pagarme/former-kit), because it is a good react-first component library. There are many components, and the styles are very easy to customize. Another important feature is that this library offers accessibility - you could navigate on the entire application using just your keyboard! 
 
-One of the disadvantage of this library if the build process. Unfortunately you need to set some steps on yor Webpack to can use this library.
+One disadvantage of this library is the build process. Unfortunately you need to set some steps on yor Webpack to can use this library.
 
 ### Tests
 
-I'm using Ava on both projects, because it can run asynchronously the tests ~(bye bye tests that demands state of the previous test!)~. I already used it on production and it fits very well - but it was my first time using it on the front-end side, and I didn't like to write the `app_list_front/tests/_init.js` file to work well on the front-end...
+I'm using Ava on both projects, because it can run the tests asynchronously ~(bye bye tests that demands state of the previous test!)~. I already used it in production and it fits very well - but it was my first time using it on the front-end side, and I didn't like to write the `app_list_front/tests/_init.js` file to work well on the front-end...
 
-On the front-end side, I picked React Testing Library, because it enfores good pratices when you are writing the tests. For example, you can't call the methods or look the internal state of you component. You only can see what the user too can see.
+On the front-end side, I picked React Testing Library, because it enforces good practices when you are writing the tests. For example, you can't call the methods or see the internal state of your component. You only can see what the user can also see.
 
 ## Routes
 
@@ -63,7 +63,7 @@ There are three routes on the server application: `GET /status`, `GET /apps` and
 
 ### `GET /status`
 
-Just to check if the server is running. It doesn't have any parameter and it should returns this:
+Check if the server is running. It takes no parameters and it should returns this:
 
 ```json
 {
@@ -73,11 +73,11 @@ Just to check if the server is running. It doesn't have any parameter and it sho
 
 ### `GET /apps`
 
-To get the list of apps. You could use the query string parameters `page`, `filterByCategory`, `filterByName`. For example, `/apps?page=1&filterByCategory=Reporting`. The result will be a part of the `app_list_server/assets/apps.json` file.
+Get the list of apps. You could use the query string parameters `page`, `filterByCategory` and `filterByName`. For example, `/apps?page=1&filterByCategory=Reporting`. The result will be a part of the `app_list_server/assets/apps.json` file.
 
 ### `GET /categories`
 
-To get the list of categories. It doesn't have any parameter and it'll return an array sorted alphabetically.
+Get the list of categories. It doesn't have any parameters and it'll return an array sorted alphabetically.
 
 ## How to run?
 
@@ -100,7 +100,7 @@ However, it's better to use only Docker to avoid compatibility issues (such as l
 
 Then, the API will be running at `http://localhost:3000`. You can check if everything is fine using the API `GET http://localhost:3000/status`; if you see `{ "status": "ok" }`, then the server is running.
 
-2 - Now, to run the front-end start the following service:
+2 - Now, start the front-end service:
 
 🐳 Using Docker
 ```
@@ -133,7 +133,7 @@ I'm using the test runner [AVA](https://github.com/avajs/ava).
 > npm run test
 ```
 
-2 - To run the tests on the front:
+2 - To run the tests on the front-end:
 
 🐳 Using Docker
 ```
@@ -148,7 +148,7 @@ I'm using the test runner [AVA](https://github.com/avajs/ava).
 
 ### Lint
 
-I'm following [Pagar.me JavaScript Style Guide](https://github.com/pagarme/javascript-style-guide) on `app_list_server` and [the respective lint rules for React application](https://github.com/pagarme/react-style-guide) on `app_list_front`.
+I'm following [Pagar.me JavaScript Style Guide](https://github.com/pagarme/javascript-style-guide) on `app_list_server` and [the respective lint rules for React applications](https://github.com/pagarme/react-style-guide) on `app_list_front`.
 
 These lint rules are based on the loved Airbnb, but are still more restrictive.
 
@@ -165,7 +165,7 @@ These lint rules are based on the loved Airbnb, but are still more restrictive.
 > npm run lint
 ```
 
-2 - To run the lint on the front:
+2 - To run the lint on the front-end:
 
 🐳 Using Docker
 ```
